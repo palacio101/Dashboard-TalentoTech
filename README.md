@@ -7,6 +7,12 @@
 ## Instalación y Configuración
 
 
+### Descargar el repositorio de GitHub
+```bash
+# Debes darle click al boton verde que dice CODE y ahi descargas el archivo .ZIP
+```
+
+
 ### Crear entorno virtual (Desde la terminal)
 ```bash
 # Crear el entorno virtual
