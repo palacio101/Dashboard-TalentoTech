@@ -46,9 +46,3 @@ tu-repositorio/
 ├── components/            # Componentes reutilizables (IMAGENES Y LOGOS ESTATICOS QUE QUERAMOS PONER EN EL DASHBOARD)
 └── README.md             # Este archivo
 ```
-
-
-### Para desactivar el entorno virtual:
-```bash
-deactivate
-```
