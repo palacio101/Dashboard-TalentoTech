@@ -17,12 +17,13 @@ python -m venv dashboard_env
 dashboard_env\Scripts\activate
 ```
 
-### 3. Instalar dependencias (Desde la terminal)
+### Instalar dependencias (Desde la terminal)
+### Con este Archivo se instalan todas las librerias necesarias (Se puede hacer solo en el entorno para que no ocupe espacio en el pc)
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Ejecutar el dashboard (Desde la terminal)
+### Ejecutar el dashboard (Desde la terminal)
 ```bash
 streamlit run app.py
 ```
