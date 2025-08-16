@@ -18,7 +18,7 @@ dashboard_env\Scripts\activate
 ```
 
 ### Instalar dependencias (Desde la terminal)
-### Con este Archivo se instalan todas las librerias necesarias (Se puede hacer solo en el entorno para que no ocupe espacio en el pc)
+### Con este archivo (requirements.txt) se instalan todas las librerias necesarias (Se puede hacer solo en el entorno para que no ocupe espacio en el pc)
 ```bash
 pip install -r requirements.txt
 ```
