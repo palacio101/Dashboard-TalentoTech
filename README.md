@@ -46,3 +46,11 @@ tu-repositorio/
 ├── components/            # Componentes reutilizables (IMAGENES Y LOGOS ESTATICOS QUE QUERAMOS PONER EN EL DASHBOARD)
 └── README.md             # Este archivo
 ```
+## Archivo Collab
+En el archivo llamado [FINAL] Proyecto Saber 11 [Medellin] se encuentra toda la información correspondiente a la limpieza y tratamiento de datos,
+ ademas de todo el tratamiento y eleccion del modelo predicitivo usado en el proyecto.
+
+## Elaborado por:
+  ### - Hector Alvarez Garzon
+  ### - Diana Bracamonte Romero
+  ### - Agustin Palacio Barrientos
