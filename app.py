@@ -18,18 +18,24 @@ warnings.filterwarnings('ignore')
 
 # Configuración de la página
 st.set_page_config(
-    page_title="ML Dashboard",
-    page_icon="🤖",
+    page_title="Análisis datos Saber 11",
+    page_icon="components/Logo_Saber11.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # Título principal
-st.title("🤖 Plataforma de Analisis de resultados de las pruebas Saber 11")
+col1, col2 = st.columns([1, 4.5])
+with col1:
+    st.write("")
+    st.write("")
+    st.write("")
+    st.image("components/Logo_Saber11.png", width=200)
+with col2:
+    st.title("Plataforma de Análisis de resultados de las pruebas Saber 11")
 st.markdown("---")
 
 # Función para cargar datos
-
 DATASET_PATH = "data/Saber11_modificado.csv"
 @st.cache_data
 def load_data():
@@ -42,13 +48,11 @@ df = load_data()
 # Mostrar información del dataset
 st.subheader("📈 Información del Dataset")
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 with col1:
     st.metric("Filas", df.shape[0])
 with col2:
     st.metric("Columnas", df.shape[1])
-with col3:
-    st.metric("Features", df.shape[1] - 2)  # -2 por target y clase
 
 # Mostrar muestra de datos
 with st.expander("🔍 Ver muestra de datos"):
@@ -59,7 +63,7 @@ with st.expander("📊 Estadísticas Descriptivas"):
     st.dataframe(df.describe())
 
 # =================== VISUALIZACIONES ===================
-st.subheader("📊 Analisis Descriptivo")
+st.subheader("📊 Análisis Descriptivo")
 
 tab1, tab2, tab3 = st.tabs(["Desempeños poblacionales", "Matriz de correlación", "Variables Socioeconómicas"]) #SE REFIERE A LAS PESTAÑAS
 
@@ -77,9 +81,6 @@ with tab1:
 
     selected_option = st.selectbox("Selecciona una visualización:", options)
     
-    #col1, col2= st.columns(2)
-    
-    #with col1:
     if selected_option == "Ingles":
         st.image("components/nivelDesempenoIngles.png", caption="Nivel de Desempeño en Ingles", use_container_width=True)
     elif selected_option == "Matematicas":
@@ -184,7 +185,7 @@ with tab2:
 
     fig_corr = px.imshow(
         matriz_correlacion,
-        text_auto=True,
+        text_auto='.4f',
         aspect="auto",
         color_continuous_scale="RdBu_r",
         
@@ -197,7 +198,10 @@ with tab3:
     
     options2 = [
         "Porcentaje de estudiantes con internet",
-        "Porcentaje de estudiantes con lavadora"
+        "Porcentaje de estudiantes con lavadora",
+        "Porcentaje de estudiantes por nivel de educación de la madre",
+        "Porcentaje de estudiantes por nivel de educación del padre",
+        "Promedio de puntaje global por estrato socioeconomico"
     ]
 
     selected_option2 = st.selectbox("Selecciona una visualización:", options2)
@@ -206,20 +210,17 @@ with tab3:
         st.image("components/internetYear.png", caption="% de estudiantes con y sin internet", use_container_width=True)
     elif selected_option2 == "Porcentaje de estudiantes con lavadora":
         st.image("components/lavadoraYear.png", caption="% de estudiantes con y sin lavadora", use_container_width=True)
-
+    elif selected_option2 == "Porcentaje de estudiantes por nivel de educación de la madre":
+        st.image("components/educacionMadre.png", caption="% de estudiantes por nivel de educación de la madre", use_container_width=True)
+    elif selected_option2 == "Porcentaje de estudiantes por nivel de educación del padre":
+        st.image("components/educacionPadre.png", caption="% de estudiantes por nivel de educación del padre", use_container_width=True)
+    elif selected_option2 == "Promedio de puntaje global por estrato socioeconomico":
+        st.image("components/puntajeEstrato.png", caption="Promedio de puntaje global por estrato socioeconomico", use_container_width=True)
 
 # =================== MACHINE LEARNING ===================
 st.markdown("---")
-st.subheader("🤖 Analisis Predictivo")
+st.subheader("🤖 Análisis Predictivo")
 
-# Configuración del modelo en sidebar
-st.sidebar.header("🎯 Configuración ML")
-
-# Selección de modelo
-model_option = st.sidebar.selectbox(
-    "Selecciona el Modelo:",
-    ["Random Forest", "Logistic Regression", "SVM"]
-)
 
 # Tamaño del conjunto de prueba
 # test_size = st.sidebar.slider("Tamaño del conjunto de prueba:", 0.1, 0.5, 0.2, 0.05) #Orden de los parametros: Min, Max, Predeterminado, paso
@@ -267,7 +268,7 @@ with col1:
     st.markdown("#### 🔎 Matriz de Confusión")
     cm = confusion_matrix(y_test, y_pred)
 
-    fig, ax = plt.subplots(figsize=(6,6.7))
+    fig, ax = plt.subplots(figsize=(6,5.95))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
                 xticklabels=modelo.classes_,
                 yticklabels=modelo.classes_,
@@ -292,6 +293,8 @@ with col2:
     fig2, ax2 = plt.subplots(figsize=(6,4))
     sns.barplot(x=importancias, y=importancias.index, palette="viridis", ax=ax2)
     ax2.set_title("Importancia de las Variables")
+    ax2.set_xlabel("Importancia")
+    ax2.set_ylabel("Variables")
     st.pyplot(fig2)
 
     
@@ -352,63 +355,16 @@ if st.button("Predecir"):
     })
     st.bar_chart(prob_df.set_index("Clase"))
 
-    
-#     # Crear inputs para cada feature
-#     prediction_inputs = {}
-#     cols = st.columns(min(3, len(st.session_state.numeric_columns)))
-    
-#     for i, feature in enumerate(st.session_state.numeric_columns):
-#         col_idx = i % len(cols)
-#         with cols[col_idx]:
-#             min_val = float(df[feature].min())
-#             max_val = float(df[feature].max())
-#             mean_val = float(df[feature].mean())
-            
-#             prediction_inputs[feature] = st.slider(
-#                 f"{feature}:",
-#                 min_val, max_val, mean_val,
-#                 key=f"pred_{feature}"
-#             )
-    
-#     if st.button("🔮 Predecir", type="primary"):
-#         # Preparar datos para predicción
-#         input_data = np.array([[prediction_inputs[feature] for feature in st.session_state.numeric_columns]])
-        
-#         if model_option in ["Logistic Regression", "SVM"]:
-#             input_data = st.session_state.scaler.transform(input_data)
-        
-#         # Hacer predicción
-#         prediction = st.session_state.model.predict(input_data)[0]
-        
-#         if hasattr(st.session_state.model, 'predict_proba'):
-#             if model_option in ["Logistic Regression", "SVM"]:
-#                 probabilities = st.session_state.model.predict_proba(input_data)[0]
-#             else:
-#                 probabilities = st.session_state.model.predict_proba(input_data)[0]
-#         else:
-#             probabilities = None
-        
-#         # Mostrar resultado
-#         st.success(f"**Predicción: {st.session_state.target_names[prediction]}**")
-        
-#         if probabilities is not None:
-#             st.markdown("**Probabilidades:**")
-#             prob_df = pd.DataFrame({
-#                 'Clase': st.session_state.target_names,
-#                 'Probabilidad': probabilities
-#             })
-            
-#             fig_prob = px.bar(prob_df, x='Clase', y='Probabilidad',
-#                              title="Probabilidades de Predicción")
-#             st.plotly_chart(fig_prob, use_container_width=True)
 
-# # Footer
-# st.markdown("---")
-# st.markdown(
-#     """
-#     <div style='text-align: center; color: #666666;'>
-#         Desarrollado con ❤️ usando Streamlit, Pandas, Scikit-learn y Plotly
-#     </div>
-#     """, 
-#     unsafe_allow_html=True
-# )
+# Footer
+st.markdown("---")
+
+st.markdown(
+    """
+    <div style='text-align: center; color: #666666;'>
+        <h3>⚠️Importante⚠️</h3>
+        Esta herramienta ofrece estimaciones sobre la posibilidad de obtener una beca a partir de predicciones de resultados Saber 11. El modelo fue entrenado con datos históricos y utiliza variables socioeconómicas únicamente como insumos estadísticos, las cuales no determinan tu resultado final. La actitud y práctica de aprendizaje del estudiante son factores decisivos para su desempeño real. No garantiza la concesión de becas ni reemplaza procesos oficiales del ICFES o de las instituciones. Usa los resultados como orientación, no como decisión definitiva
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
