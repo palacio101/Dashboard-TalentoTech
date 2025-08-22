@@ -48,7 +48,7 @@ tu-repositorio/
 ```
 ## Archivo Collab
 En el archivo llamado [FINAL] Proyecto Saber 11 [Medellin] se encuentra toda la información correspondiente a la limpieza y tratamiento de datos,
- ademas de todo el tratamiento y eleccion del modelo predicitivo usado en el proyecto.
+ ademas de todo el tratamiento y eleccion del modelo predictivo usado en el proyecto. Para correr este modelo se debe cargar la data 
 
 ## Elaborado por:
   ### - Hector Alvarez Garzon
