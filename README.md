@@ -36,6 +36,9 @@ streamlit run app.py
 
 El dashboard se abrirá automáticamente en tu navegador en `http://localhost:8501`
 
+## Aclaración
+Para el uso del dashboard se debe cargar solamente la data ubicada en el archivo .zip llamado "Saber_11_modificado".
+
 ## Estructura del proyecto
 
 ```
@@ -48,7 +51,7 @@ tu-repositorio/
 ```
 ## Archivo Collab
 En el archivo llamado [FINAL] Proyecto Saber 11 [Medellin] se encuentra toda la información correspondiente a la limpieza y tratamiento de datos,
- ademas de todo el tratamiento y eleccion del modelo predictivo usado en el proyecto. Para correr este modelo se debe cargar la data 
+ ademas de todo el tratamiento y eleccion del modelo predictivo usado en el proyecto. Para correr este modelo se debe cargar la data ubicada en el archivo .zip llamado "Saber11_Medellin".
 
 ## Elaborado por:
   ### - Hector Alvarez Garzon
